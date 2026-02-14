@@ -104,16 +104,28 @@ h1{
 <div class="flor f3">🌹</div>
 <div class="flor f4">🌷</div>
 
-<div style="text-align:center; margin-top:20px;">
-    <audio autoplay loop>
-        <source src="/audio/musica.mp3" type="audio/mpeg">
-    </audio>
-</div>
-<button onclick="document.getElementById('musica').play()">
-    Presiona aquí ❤️
-</button>
+<audio id="musica" loop>
+    <source src="audio/musica.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const audio = document.getElementById("musica");
+
+function toggleMusica(){
+    if(audio.paused){
+        audio.play().catch(()=>{});
+    }else{
+        audio.pause();
+    }
+}
+
+// sirve en celular y pc
+document.addEventListener("click", toggleMusica);
+document.addEventListener("touchstart", toggleMusica);
+</script>
+
 <div class="carta">
-<h1>Para Ti ❤️</h1>
+<h1>Para ti mi vida ❤️‍🩹</h1>
 
 <p>
 Han pasado 9 meses desde que nos conocimos, en donde un día normal terminó siendo muy importante.
@@ -180,7 +192,6 @@ Atte. Tu bonito
 <div class="galeria">
     <!-- Cambia por tus fotos -->
     <img src="Fotos/Cabañas.jpg">
-    <img src="Fotos/Cumple1.jpg">
     <img src="Fotos/Pozones.jpg">
     <img src="Fotos/Cumple3.jpg">
     <img src="Fotos/Nieve.jpg">
