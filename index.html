@@ -122,11 +122,10 @@ h1{
 <div class="flor f3">🌹</div>
 <div class="flor f4">🌷</div>
 
-<audio id="musica" loop>
+<audio id="musica" loop preload="auto">
     <source src="audio/musica.mp3" type="audio/mpeg">
 </audio>
 
-<!-- BOTÓN FLOTANTE -->
 <button id="controlMusica">⏸</button>
 
 <script>
@@ -134,20 +133,23 @@ const audio = document.getElementById("musica");
 const boton = document.getElementById("controlMusica");
 let iniciada = false;
 
-// tocar pantalla = iniciar solo la primera vez
+// iniciar música al tocar pantalla (celular real)
 function iniciarMusica(){
     if(!iniciada){
-        audio.play().catch(()=>{});
-        iniciada = true;
+        audio.muted = false;
+        audio.play().then(()=>{
+            iniciada = true;
+        }).catch(err=>console.log(err));
     }
 }
 
-document.addEventListener("click", iniciarMusica);
-document.addEventListener("touchstart", iniciarMusica);
+// eventos reales de interacción móvil
+document.body.addEventListener("touchend", iniciarMusica, {passive:true});
+document.body.addEventListener("click", iniciarMusica);
 
 // botón pausa / continuar
 boton.addEventListener("click", function(e){
-    e.stopPropagation(); // evita activar el click de pantalla
+    e.stopPropagation();
 
     if(audio.paused){
         audio.play();
