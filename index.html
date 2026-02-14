@@ -93,6 +93,24 @@ h1{
 .f2{top:15%; right:3%;}
 .f3{bottom:10%; left:4%;}
 .f4{bottom:15%; right:2%;}
+
+#controlMusica{
+    position:fixed;
+    bottom:20px;
+    right:20px;
+    background:#ff4da6;
+    color:white;
+    border:none;
+    border-radius:50px;
+    padding:15px 18px;
+    font-size:18px;
+    cursor:pointer;
+    box-shadow:0 5px 15px rgba(0,0,0,.3);
+    z-index:999;
+}
+#controlMusica:hover{
+    transform:scale(1.1);
+}
 </style>
 </head>
 
@@ -108,21 +126,41 @@ h1{
     <source src="audio/musica.mp3" type="audio/mpeg">
 </audio>
 
+<!-- BOTÓN FLOTANTE -->
+<button id="controlMusica">⏸</button>
+
 <script>
 const audio = document.getElementById("musica");
+const boton = document.getElementById("controlMusica");
+let iniciada = false;
 
-function toggleMusica(){
-    if(audio.paused){
+// tocar pantalla = iniciar solo la primera vez
+function iniciarMusica(){
+    if(!iniciada){
         audio.play().catch(()=>{});
-    }else{
-        audio.pause();
+        iniciada = true;
     }
 }
 
-// sirve en celular y pc
-document.addEventListener("click", toggleMusica);
-document.addEventListener("touchstart", toggleMusica);
+document.addEventListener("click", iniciarMusica);
+document.addEventListener("touchstart", iniciarMusica);
+
+// botón pausa / continuar
+boton.addEventListener("click", function(e){
+    e.stopPropagation(); // evita activar el click de pantalla
+
+    if(audio.paused){
+        audio.play();
+        boton.textContent = "⏸";
+    }else{
+        audio.pause();
+        boton.textContent = "▶️";
+    }
+});
 </script>
+
+
+
 
 <div class="carta">
 <h1>Para ti mi vida ❤️‍🩹</h1>
